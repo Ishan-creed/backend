@@ -5,7 +5,7 @@ import cors from  'cors'
 import ConnectDB from './database/connectDB.js'
 
 const app = express()
-var PORT = process.env.PORT;
+var PORT = process.env.PORT || 5000;
 
 app.use(cors());
 
