@@ -50,18 +50,26 @@ export const addUser = async (request, response) => {
 
 
 export const updateUser = async (request, response) => {
-
-  let {formData} = request.body; // Corrected access to formData
+  let { formData } = request.body;
 
   console.log(formData);
 
-
   try {
     const existingEntry = await MyUser.findOne({ userId: formData.userId });
-    existingEntry.name = formData.name;     // Corrected property access
-    existingEntry.phone = formData.phone;   // Corrected property access
-    existingEntry.email = formData.email;   // Corrected property access
-    existingEntry.hobbies = formData.hobbies; // Corrected property access
+
+    // Update fields only if they are not empty
+    if (formData.name) {
+      existingEntry.name = formData.name;
+    }
+    if (formData.phone) {
+      existingEntry.phone = formData.phone;
+    }
+    if (formData.email) {
+      existingEntry.email = formData.email;
+    }
+    if (formData.hobbies) {
+      existingEntry.hobbies = formData.hobbies;
+    }
 
     const updatedEntry = await existingEntry.save();
 
@@ -72,7 +80,6 @@ export const updateUser = async (request, response) => {
     response.status(500).json({ error: 'Failed to update the entry' });
   }
 };
-
 export const deleteUser = async (request,response)=>{
 
     let Id = request.query.id;
